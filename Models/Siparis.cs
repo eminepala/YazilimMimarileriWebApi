@@ -17,4 +17,7 @@ public class Siparis
     public DateTime? UpdatedAt { get; set; }
     
     public ICollection<SiparisDetay> SiparisDetaylari { get; set; } = new List<SiparisDetay>();
+    
+    
+    
 }
