@@ -15,4 +15,6 @@ public class Kullanici
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
+    
+    public ICollection<Siparis> Siparisler { get; set; } = new List<Siparis>();
 }

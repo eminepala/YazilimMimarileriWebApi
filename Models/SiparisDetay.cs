@@ -14,4 +14,8 @@ public class SiparisDetay
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
+    
+    public Siparis Siparis { get; set; } = null!;
+    public Kitap Kitap { get; set; } = null!;
+    
 }

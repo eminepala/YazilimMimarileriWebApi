@@ -7,7 +7,7 @@ public class Yorum
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    // 🔑 FOREIGN KEY
+ 
     public int KitapId { get; set; }
 
     public required string Icerik { get; set; }
@@ -15,4 +15,6 @@ public class Yorum
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
+    
+    public Kitap Kitap { get; set; } = null!;
 }

@@ -15,4 +15,6 @@ public class Siparis
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
+    
+    public ICollection<SiparisDetay> SiparisDetaylari { get; set; } = new List<SiparisDetay>();
 }
