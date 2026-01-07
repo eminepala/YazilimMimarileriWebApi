@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IKitapService, KitapService>();
 builder.Services.AddScoped<IKullaniciService, KullaniciService>();
 builder.Services.AddScoped<ISiparisService, SiparisService>();
+builder.Services.AddScoped<IYorumService, YorumService>();
 
 
 builder.Services.AddControllers()
