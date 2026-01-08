@@ -16,7 +16,37 @@ public class YorumController : ControllerBase
         _yorumService = yorumService;
     }
 
-    // GET api/yorumlar/kitap/5
+    // GET api/yorumlar
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var data = await _yorumService.GetAllAsync();
+
+        return Ok(
+            ApiResponse<List<YorumResponseDto>>
+                .SuccessResponse(data, "Tüm yorumlar listelendi")
+        );
+    }
+
+    // GET api/yorumlar/5
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var data = await _yorumService.GetByIdAsync(id);
+
+        if (data == null)
+        {
+            return NotFound(
+                ApiResponse<string>.FailResponse("Yorum bulunamadı")
+            );
+        }
+
+        return Ok(
+            ApiResponse<YorumResponseDto>.SuccessResponse(data)
+        );
+    }
+
+    // GET api/yorumlar/kitap/3
     [HttpGet("kitap/{kitapId}")]
     public async Task<IActionResult> GetByKitapId(int kitapId)
     {
@@ -24,7 +54,7 @@ public class YorumController : ControllerBase
 
         return Ok(
             ApiResponse<List<YorumResponseDto>>
-                .SuccessResponse(data, "Yorumlar listelendi")
+                .SuccessResponse(data, "Kitaba ait yorumlar listelendi")
         );
     }
 
@@ -85,6 +115,6 @@ public class YorumController : ControllerBase
             );
         }
 
-        return NoContent();
+        return NoContent(); // 204
     }
 }

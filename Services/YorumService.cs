@@ -80,4 +80,33 @@ public class YorumService : IYorumService
         await _context.SaveChangesAsync();
         return true;
     }
+    public async Task<List<YorumResponseDto>> GetAllAsync()
+    {
+        return await _context.Yorumlar
+            .Select(y => new YorumResponseDto
+            {
+                Id = y.Id,
+                KitapId = y.KitapId,
+                Icerik = y.Icerik,
+                Puan = y.Puan,
+                CreatedAt = y.CreatedAt
+            })
+            .ToListAsync();
+    }
+
+    public async Task<YorumResponseDto?> GetByIdAsync(int id)
+    {
+        return await _context.Yorumlar
+            .Where(y => y.Id == id)
+            .Select(y => new YorumResponseDto
+            {
+                Id = y.Id,
+                KitapId = y.KitapId,
+                Icerik = y.Icerik,
+                Puan = y.Puan,
+                CreatedAt = y.CreatedAt
+            })
+            .FirstOrDefaultAsync();
+    }
+
 }
