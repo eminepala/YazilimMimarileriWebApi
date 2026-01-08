@@ -19,4 +19,6 @@ public class Kitap
     
     public ICollection<Yorum> Yorumlar { get; set; } = new List<Yorum>();
     public ICollection<SiparisDetay> SiparisDetaylari { get; set; } = new List<SiparisDetay>();
+    public bool IsDeleted { get; set; } = false;
+
 }

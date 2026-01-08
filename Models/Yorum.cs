@@ -17,4 +17,6 @@ public class Yorum
     public DateTime? UpdatedAt { get; set; }
     
     public Kitap Kitap { get; set; } = null!;
+    public bool IsDeleted { get; set; } = false;
+
 }

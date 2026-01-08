@@ -17,4 +17,6 @@ public class Kullanici
     public DateTime? UpdatedAt { get; set; }
     
     public ICollection<Siparis> Siparisler { get; set; } = new List<Siparis>();
+    public bool IsDeleted { get; set; } = false;
+
 }

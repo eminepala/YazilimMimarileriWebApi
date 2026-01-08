@@ -17,7 +17,8 @@ public class SiparisDetay
     
     public Siparis Siparis { get; set; } = null!;
     public Kitap Kitap { get; set; } = null!;
-    
+    public bool IsDeleted { get; set; } = false;
+
     
     
 }

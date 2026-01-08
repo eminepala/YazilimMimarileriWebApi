@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+       
         // Kitap - Yorum (1-N)
         modelBuilder.Entity<Yorum>()
             .HasOne<Kitap>()
@@ -47,5 +48,21 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(sd => sd.KitapId)
             .OnDelete(DeleteBehavior.Restrict);
+
+      
+        modelBuilder.Entity<Kullanici>()
+            .HasQueryFilter(x => !x.IsDeleted);
+
+        modelBuilder.Entity<Kitap>()
+            .HasQueryFilter(x => !x.IsDeleted);
+
+        modelBuilder.Entity<Siparis>()
+            .HasQueryFilter(x => !x.IsDeleted);
+
+        modelBuilder.Entity<SiparisDetay>()
+            .HasQueryFilter(x => !x.IsDeleted);
+
+        modelBuilder.Entity<Yorum>()
+            .HasQueryFilter(x => !x.IsDeleted);
     }
 }
