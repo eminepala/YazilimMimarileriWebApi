@@ -3,6 +3,7 @@ using YazilimMimarileri.Data;
 using YazilimMimarileri.Services;
 using YazilimMimarileri.Services.Interfaces;
 using System.Text.Json.Serialization;
+using YazilimMimarileri.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,6 @@ builder.Services.AddScoped<IKullaniciService, KullaniciService>();
 builder.Services.AddScoped<ISiparisService, SiparisService>();
 builder.Services.AddScoped<IYorumService, YorumService>();
 
-
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -29,13 +29,16 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "YazilimMimarileri API v1");
+});
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.MapControllers();
 
