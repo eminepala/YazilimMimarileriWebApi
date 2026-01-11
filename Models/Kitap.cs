@@ -14,7 +14,7 @@ public class Kitap
     public float Fiyat { get; set; }
     public int Stok { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     
     public ICollection<Yorum> Yorumlar { get; set; } = new List<Yorum>();

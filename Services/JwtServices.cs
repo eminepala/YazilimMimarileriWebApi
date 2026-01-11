@@ -14,13 +14,13 @@ public class JwtService : IJwtService
     {
         _configuration = configuration;
     }
-
     public string GenerateToken(Kullanici kullanici)
     {
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, kullanici.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, kullanici.Email),
+            new Claim(ClaimTypes.NameIdentifier, kullanici.Id.ToString()),
+            new Claim(ClaimTypes.Email, kullanici.Email),
+            new Claim(ClaimTypes.Role, kullanici.Rol),   // 👈 ROLE EKLENDİ
             new Claim("ad", kullanici.Ad),
             new Claim("soyad", kullanici.Soyad)
         };
@@ -43,4 +43,6 @@ public class JwtService : IJwtService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+   
 }

@@ -9,8 +9,10 @@ public class Siparis
     public int Id { get; set; }
 
     public int KullaniciId { get; set; }
+    
+    public Kullanici Kullanici { get; set; } = null!;
 
-    public DateTimeOffset SiparisTarihi { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset SiparisTarihi { get; set; }
     public OdemeYontemi OdemeYontemi { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -18,6 +20,7 @@ public class Siparis
     
     public ICollection<SiparisDetay> SiparisDetaylari { get; set; } = new List<SiparisDetay>();
     public bool IsDeleted { get; set; } = false;
+    
 
     
     

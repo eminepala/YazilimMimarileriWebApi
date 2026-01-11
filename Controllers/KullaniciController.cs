@@ -86,4 +86,6 @@ public class KullaniciController : ControllerBase
 
         return NoContent(); // 204 – body yok, REST'e uygun
     }
+    
+
 }

@@ -31,7 +31,9 @@ public class AppDbContext : DbContext
                 Id = 1,
                 Ad = "Emine",
                 Soyad = "PALA",
+                KullaniciAdi = "emine",
                 Email = "emine@test.com",
+                SifreHash = "SEED_HASH",  
                 Yas = 21,
                 Adres = "Denizli",
                 CreatedAt = SeedDate,
@@ -64,17 +66,21 @@ public class AppDbContext : DbContext
             }
         );
 
+        
         modelBuilder.Entity<SiparisDetay>().HasData(
             new SiparisDetay
-            {
-                Id = 1,
-                SiparisId = 1,
-                KitapId = 1,
-                Adet = 1,
-                CreatedAt = SeedDate,
-                IsDeleted = false
-            }
-        );
+             {
+                 Id = 1,
+                 SiparisId = 1,
+                 KitapId = 1,
+                 Adet = 1,
+                 BirimFiyat = 105, 
+                 CreatedAt = SeedDate,
+                 IsDeleted = false
+             }
+            );
+
+        
 
         modelBuilder.Entity<Yorum>().HasData(
             new Yorum
@@ -92,33 +98,31 @@ public class AppDbContext : DbContext
 
         // Kitap - Yorum (1-N)
         modelBuilder.Entity<Yorum>()
-            .HasOne<Kitap>()
-            .WithMany()
+            .HasOne(y => y.Kitap)
+            .WithMany(k => k.Yorumlar)
             .HasForeignKey(y => y.KitapId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Siparis - Kullanici (N-1)
+        // Kullanici - Siparis (1-N)
         modelBuilder.Entity<Siparis>()
-            .HasOne<Kullanici>()
+            .HasOne(s => s.Kullanici)
             .WithMany(k => k.Siparisler)
             .HasForeignKey(s => s.KullaniciId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // SiparisDetay - Siparis (N-1)
+        // Siparis - SiparisDetay (1-N)
         modelBuilder.Entity<SiparisDetay>()
-            .HasOne<Siparis>()
-            .WithMany()
+            .HasOne(sd => sd.Siparis)
+            .WithMany(s => s.SiparisDetaylari)
             .HasForeignKey(sd => sd.SiparisId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // SiparisDetay - Kitap (N-1)
+        // Kitap - SiparisDetay (1-N)
         modelBuilder.Entity<SiparisDetay>()
-            .HasOne<Kitap>()
-            .WithMany()
+            .HasOne(sd => sd.Kitap)
+            .WithMany(k => k.SiparisDetaylari)
             .HasForeignKey(sd => sd.KitapId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        // ===================== SOFT DELETE FILTER =====================
 
         modelBuilder.Entity<Kullanici>()
             .HasQueryFilter(x => !x.IsDeleted);
