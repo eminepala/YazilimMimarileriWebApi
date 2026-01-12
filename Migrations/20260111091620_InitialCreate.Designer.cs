@@ -11,8 +11,8 @@ using YazilimMimarileri.Data;
 namespace YazilimMimarileri.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260104155944_IliskilerEklendi")]
-    partial class IliskilerEklendi
+    [Migration("20260111091620_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,9 @@ namespace YazilimMimarileri.Migrations
                     b.Property<float>("Fiyat")
                         .HasColumnType("REAL");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Stok")
                         .HasColumnType("INTEGER");
 
@@ -53,6 +56,19 @@ namespace YazilimMimarileri.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Kitaplar");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Aciklama = "Küçük Prens, Antoine de Saint-Exupéry tarafından yazılmış klasik bir eserdir.",
+                            Ad = "Küçük Prens",
+                            CreatedAt = new DateTime(2026, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fiyat = 105f,
+                            IsDeleted = false,
+                            Stok = 10,
+                            Yazar = "Antoine de Saint-Exupéry"
+                        });
                 });
 
             modelBuilder.Entity("YazilimMimarileri.Models.Kullanici", b =>
@@ -76,6 +92,21 @@ namespace YazilimMimarileri.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("KullaniciAdi")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SifreHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Soyad")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -89,6 +120,22 @@ namespace YazilimMimarileri.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Kullanicilar");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ad = "Emine",
+                            Adres = "Denizli",
+                            CreatedAt = new DateTime(2026, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "emine@test.com",
+                            IsDeleted = false,
+                            KullaniciAdi = "emine",
+                            Rol = "User",
+                            SifreHash = "SEED_HASH",
+                            Soyad = "PALA",
+                            Yas = 21
+                        });
                 });
 
             modelBuilder.Entity("YazilimMimarileri.Models.Siparis", b =>
@@ -100,10 +147,10 @@ namespace YazilimMimarileri.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("KullaniciId")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("KullaniciId1")
+                    b.Property<int>("KullaniciId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("OdemeYontemi")
@@ -119,9 +166,18 @@ namespace YazilimMimarileri.Migrations
 
                     b.HasIndex("KullaniciId");
 
-                    b.HasIndex("KullaniciId1");
-
                     b.ToTable("Siparisler");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            KullaniciId = 1,
+                            OdemeYontemi = 0,
+                            SiparisTarihi = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        });
                 });
 
             modelBuilder.Entity("YazilimMimarileri.Models.SiparisDetay", b =>
@@ -139,16 +195,13 @@ namespace YazilimMimarileri.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("KitapId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("KitapId1")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("SiparisId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SiparisId1")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -158,13 +211,21 @@ namespace YazilimMimarileri.Migrations
 
                     b.HasIndex("KitapId");
 
-                    b.HasIndex("KitapId1");
-
                     b.HasIndex("SiparisId");
 
-                    b.HasIndex("SiparisId1");
-
                     b.ToTable("SiparisDetaylari");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Adet = 1,
+                            BirimFiyat = 105f,
+                            CreatedAt = new DateTime(2026, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            KitapId = 1,
+                            SiparisId = 1
+                        });
                 });
 
             modelBuilder.Entity("YazilimMimarileri.Models.Yorum", b =>
@@ -180,10 +241,10 @@ namespace YazilimMimarileri.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("KitapId")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("KitapId1")
+                    b.Property<int>("KitapId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Puan")
@@ -196,47 +257,42 @@ namespace YazilimMimarileri.Migrations
 
                     b.HasIndex("KitapId");
 
-                    b.HasIndex("KitapId1");
-
                     b.ToTable("Yorumlar");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icerik = "Her yaştaki kişi okumalı",
+                            IsDeleted = false,
+                            KitapId = 1,
+                            Puan = 5
+                        });
                 });
 
             modelBuilder.Entity("YazilimMimarileri.Models.Siparis", b =>
                 {
-                    b.HasOne("YazilimMimarileri.Models.Kullanici", null)
-                        .WithMany()
+                    b.HasOne("YazilimMimarileri.Models.Kullanici", "Kullanici")
+                        .WithMany("Siparisler")
                         .HasForeignKey("KullaniciId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("YazilimMimarileri.Models.Kullanici", null)
-                        .WithMany("Siparisler")
-                        .HasForeignKey("KullaniciId1");
+                    b.Navigation("Kullanici");
                 });
 
             modelBuilder.Entity("YazilimMimarileri.Models.SiparisDetay", b =>
                 {
-                    b.HasOne("YazilimMimarileri.Models.Kitap", null)
-                        .WithMany()
+                    b.HasOne("YazilimMimarileri.Models.Kitap", "Kitap")
+                        .WithMany("SiparisDetaylari")
                         .HasForeignKey("KitapId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("YazilimMimarileri.Models.Kitap", "Kitap")
-                        .WithMany("SiparisDetaylari")
-                        .HasForeignKey("KitapId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YazilimMimarileri.Models.Siparis", null)
-                        .WithMany()
-                        .HasForeignKey("SiparisId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("YazilimMimarileri.Models.Siparis", "Siparis")
                         .WithMany("SiparisDetaylari")
-                        .HasForeignKey("SiparisId1")
+                        .HasForeignKey("SiparisId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -247,15 +303,9 @@ namespace YazilimMimarileri.Migrations
 
             modelBuilder.Entity("YazilimMimarileri.Models.Yorum", b =>
                 {
-                    b.HasOne("YazilimMimarileri.Models.Kitap", null)
-                        .WithMany()
-                        .HasForeignKey("KitapId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("YazilimMimarileri.Models.Kitap", "Kitap")
                         .WithMany("Yorumlar")
-                        .HasForeignKey("KitapId1")
+                        .HasForeignKey("KitapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

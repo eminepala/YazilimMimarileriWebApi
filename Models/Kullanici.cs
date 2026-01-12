@@ -13,12 +13,13 @@ public class Kullanici
     public int Yas { get; set; }
     public required string Adres { get; set; }
 
+
     //JWT alanları
     public string KullaniciAdi { get; set; } = null!;
     public string SifreHash { get; set; } = null!;
     public string Rol { get; set; } = "User";
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 
     public ICollection<Siparis> Siparisler { get; set; } = new List<Siparis>();

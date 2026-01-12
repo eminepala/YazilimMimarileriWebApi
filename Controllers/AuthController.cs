@@ -4,6 +4,11 @@ using YazilimMimarileri.Common;
 using YazilimMimarileri.Data;
 using YazilimMimarileri.DTOs.Auth;
 using YazilimMimarileri.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+
+
+
+
 
 namespace YazilimMimarileri.Controllers;
 
@@ -20,7 +25,7 @@ public class AuthController : ControllerBase
         _jwtService = jwtService;
     }
 
-    // POST api/auth/login
+    
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {
@@ -41,6 +46,17 @@ public class AuthController : ControllerBase
             {
                 accessToken = token
             }, "Giriş başarılı")
+        );
+    }
+    [Authorize(Roles = "Admin")]
+    [HttpGet("admin-only")]
+    public IActionResult AdminOnly()
+    {
+        return Ok(
+            ApiResponse<string>.SuccessResponse(
+                "Sadece Admin erişebilir",
+                "Yetkilendirme başarılı"
+            )
         );
     }
 }

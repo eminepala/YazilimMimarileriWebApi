@@ -12,7 +12,7 @@ public class SiparisDetay
     public int Adet { get; set; }
     public float BirimFiyat { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     
     public Siparis Siparis { get; set; } = null!;
